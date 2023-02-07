@@ -1,0 +1,22 @@
+.authorization__notification {
+   width: 100%;
+
+   font-family: 'Inter', sans-serif;
+   font-weight: 400;
+   font-size: 14px;
+   line-height: 17px;
+
+   text-align: center;
+
+   color: #FFFFFF;
+
+   margin: 0;
+   padding: 15px 0 0 0;
+}
+
+@media screen and (max-width: 425px) {
+   .authorization__notification {
+      font-size: 14px;
+      line-height: 17px;
+   }
+}

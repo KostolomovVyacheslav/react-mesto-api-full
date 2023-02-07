@@ -1,0 +1,29 @@
+.header__link {
+   align-self: flex-start;
+
+   font-family: 'Inter', sans-serif;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 22px;
+
+   color: #FFFFFF;
+   text-decoration: none;
+
+   transition: 0.3s;
+
+   margin: 0;
+}
+
+.header__link:hover {
+   cursor: pointer;
+   opacity: 0.6;
+}
+
+@media screen and (max-width: 425px) {
+   .header__link {
+      align-self: auto;
+      
+      font-size: 14px;
+      line-height: 17px;
+   }
+}
