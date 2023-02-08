@@ -4,7 +4,7 @@ logs
 npm-debug.log*
 
 # Dependency directory
-/node_modules
+node_modules
 
 # testing
 /coverage
@@ -18,7 +18,7 @@ npm-debug.log*
 .vscode
 
 # production
-/build
+build
 
 # Custom environment
 .env
