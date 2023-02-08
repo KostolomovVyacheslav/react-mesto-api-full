@@ -8,6 +8,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const isUrl = require('validator/lib/isURL');
 const BadRequest = require('./errors/400-BadRequestError');
 const { createUser, login } = require('./controllers/users');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const handleError = require('./middlewares/handleError');
 
@@ -28,6 +29,8 @@ app.use(limiter);
 app.use(helmet());
 
 app.use(express.json());
+
+app.use(requestLogger);
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({
@@ -58,8 +61,9 @@ app.use('/users', require('./routes/users'));
 
 app.use('/', require('./routes/notExist'));
 
-app.use(errors());
+app.use(errorLogger);
 
+app.use(errors());
 app.use(handleError);
 
 app.listen(PORT, () => {
