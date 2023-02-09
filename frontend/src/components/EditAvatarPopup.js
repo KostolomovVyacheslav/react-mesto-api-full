@@ -7,10 +7,6 @@ function EditAvatarPopup(props) {
 
    const buttonText = `${props.renderLoading ? 'Сохранение...' : 'Сохранить'}`;
 
-   useEffect(() => {
-      inputRef.current.value = ('');
-   }, [props.isOpen]);
-
    const handleSubmit = (evt) => {
       evt.preventDefault();
 
@@ -18,6 +14,10 @@ function EditAvatarPopup(props) {
          avatar: inputRef.current.value
       });
    };
+
+   useEffect(() => {
+      inputRef.current.value = '';
+   }, [props.isOpen]);
 
    return(
       <PopupWithForm
