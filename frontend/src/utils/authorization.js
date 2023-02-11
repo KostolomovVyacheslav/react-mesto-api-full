@@ -1,6 +1,7 @@
 class Authorization {
-   constructor({url, token}) {
+   constructor({url, headers, token}) {
       this.url = url;
+      this._headers = headers;
       this.token = token;
    }
    
@@ -53,4 +54,7 @@ class Authorization {
 
 export default new Authorization({
    url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
+   headers: {
+      'Content-Type': 'application/json',
+    },
 });
