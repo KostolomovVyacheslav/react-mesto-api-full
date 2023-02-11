@@ -14,6 +14,7 @@ class Authorization {
    register(data) {
       return fetch(`${this.url}/signup`, {
          method: 'POST',
+         credentials: 'include',
          headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -29,10 +30,12 @@ class Authorization {
    authorize(data) {
    return fetch(`${this.url}/signin`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
          'Accept': 'application/json',
          'Content-Type': 'application/json'
       },
+      
       body: JSON.stringify({
          "password": data.password,
          "email": data.email
