@@ -19,14 +19,13 @@ mongoose.connect(MONGO_URL);
 
 const app = express();
 
-app.use(cors);
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: 'Слишком много запросов, пожалуйста попробуйте позже :)',
 });
 
+app.use(cors);
 app.use(cookieParser());
 app.use(limiter);
 app.use(helmet());

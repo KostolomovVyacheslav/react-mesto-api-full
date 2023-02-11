@@ -16,6 +16,7 @@ class Authorization {
          method: 'POST',
          credentials: 'include',
          headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
          },
          body: JSON.stringify({
@@ -31,6 +32,7 @@ class Authorization {
       method: 'POST',
       credentials: 'include',
       headers: {
+         'Accept': 'application/json',
          'Content-Type': 'application/json'
       },
       
@@ -45,7 +47,9 @@ class Authorization {
    getContent(token) {
       return fetch(`${this._url}/users/me`, {
          method: 'GET',
+         credentials: 'include',
          headers: {
+            'Accept': 'application/json',
             "Content-Type": "application/json",
             "Authorization" : `Bearer ${token}`
          }
