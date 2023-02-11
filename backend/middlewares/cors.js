@@ -1,7 +1,7 @@
 const allowedCors = [
-  'http://localhost:3000',
-  'http://vyacheslav-kostolomov.nomoredomainsclub.ru',
   'https://vyacheslav-kostolomov.nomoredomainsclub.ru',
+  'http://vyacheslav-kostolomov.nomoredomainsclub.ru',
+  'http://localhost:3000',
 ];
 
 const cors = (req, res, next) => {
@@ -25,6 +25,4 @@ const cors = (req, res, next) => {
   return next();
 };
 
-module.exports = {
-  cors,
-};
+module.exports = cors;
