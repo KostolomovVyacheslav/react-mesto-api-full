@@ -124,5 +124,8 @@ class Api {
 }
 
 export default new Api({
-   url: 'http://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
-})
+   url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
+   headers: {
+      'Content-Type': 'application/json',
+    },
+});

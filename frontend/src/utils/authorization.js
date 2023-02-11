@@ -52,5 +52,5 @@ class Authorization {
 }
 
 export default new Authorization({
-   url: 'https://auth.nomoreparties.co'
+   url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
 });
