@@ -1,7 +1,7 @@
 const allowedCors = [
-  'https://vyacheslav-kostolomov.nomoredomainsclub.ru',
-  'http://vyacheslav-kostolomov.nomoredomainsclub.ru',
   'http://localhost:3000',
+  'http://vyacheslav-kostolomov.nomoredomainsclub.ru',
+  'https://vyacheslav-kostolomov.nomoredomainsclub.ru',
 ];
 
 const cors = (req, res, next) => {
@@ -11,7 +11,7 @@ const cors = (req, res, next) => {
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
   if (allowedCors.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Credentials', true);
   }
 

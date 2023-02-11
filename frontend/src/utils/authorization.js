@@ -1,6 +1,6 @@
 class Authorization {
    constructor({url, token}) {
-      this.url = url;
+      this._url = url;
       this.token = token;
    }
    
@@ -12,11 +12,10 @@ class Authorization {
       }
 
    register(data) {
-      return fetch(`${this.url}/signup`, {
+      return fetch(`${this._url}/signup`, {
          method: 'POST',
          credentials: 'include',
          headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
          },
          body: JSON.stringify({
@@ -28,11 +27,10 @@ class Authorization {
    }
 
    authorize(data) {
-   return fetch(`${this.url}/signin`, {
+   return fetch(`${this._url}/signin`, {
       method: 'POST',
       credentials: 'include',
       headers: {
-         'Accept': 'application/json',
          'Content-Type': 'application/json'
       },
       
@@ -44,17 +42,16 @@ class Authorization {
       .then(res => this._getResponse(res));
    }
 
-   // getContent(token) {
-   //    return fetch(`${this.url}/users/me`, {
-   //       method: 'GET',
-   //       headers: {
-   //          'Accept': 'application/json',
-   //          "Content-Type": "application/json",
-   //          "Authorization" : `Bearer ${token}`
-   //       }
-   //       })
-   //       .then(res => this._getResponse(res));
-   // }
+   getContent(token) {
+      return fetch(`${this._url}/users/me`, {
+         method: 'GET',
+         headers: {
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+         }
+         })
+         .then(res => this._getResponse(res));
+   }
 }
 
 export default new Authorization({

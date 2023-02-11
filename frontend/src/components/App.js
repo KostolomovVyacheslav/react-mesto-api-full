@@ -51,7 +51,7 @@ function App() {
     authorization.register(data)
     .then(() => {
       setPopupTitle('Вы успешно зарегистрировались!');
-      navigate('/sign-in');
+      navigate('/signin');
       setIsAuthSuccess(true);
     })
     .catch(() => {
@@ -115,7 +115,7 @@ function App() {
     setLoggedIn(false);
     setEmail(null);
     localStorage.removeItem('token');
-    navigate('/sign-in');
+    navigate('/signin');
   };
 
   const handleCardLike = (card) => {
@@ -223,18 +223,18 @@ function App() {
 
         <Routes>
 
-          <Route path="*" element={<Navigate to={loggedIn ? "/" : "sign-in"}></Navigate>} />
+          <Route path="*" element={<Navigate to={loggedIn ? "/" : "signin"}></Navigate>} />
           
-          <Route path="/sign-up" element={
+          <Route path="/signup" element={
             <>
-              <Header title="Войти" route="/sign-in" />
+              <Header title="Войти" route="/signin" />
               <Register onRegister={handleRegister} />
             </>
           }/>
 
-          <Route path="/sign-in" element={
+          <Route path="/signin" element={
             <>
-              <Header title="Регистрация" route="/sign-up" />
+              <Header title="Регистрация" route="/signup" />
               <Login onAuthorization={handleAuthorization} />
             </>
           } />
