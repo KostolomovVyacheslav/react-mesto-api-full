@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
+const cors = require('./middlewares/cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const isUrl = require('validator/lib/isURL');
 const BadRequest = require('./errors/400-BadRequestError');
@@ -17,6 +18,8 @@ const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process
 mongoose.connect(MONGO_URL);
 
 const app = express();
+
+app.use(cors);
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,

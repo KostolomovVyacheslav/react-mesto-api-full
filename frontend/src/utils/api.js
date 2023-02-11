@@ -124,6 +124,5 @@ class Api {
 }
 
 export default new Api({
-   url: 'https://mesto.nomoreparties.co/v1/cohort-46',
-   headers: 'ddb2474c-5895-4c61-a372-bb2b9d4e6bd7'
+   url: 'http://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
 })
