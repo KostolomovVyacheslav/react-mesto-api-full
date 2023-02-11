@@ -44,17 +44,17 @@ class Authorization {
       .then(res => this._getResponse(res));
    }
 
-   getContent(token) {
-      return fetch(`${this.url}/users/me`, {
-         method: 'GET',
-         headers: {
-            'Accept': 'application/json',
-            "Content-Type": "application/json",
-            "Authorization" : `Bearer ${token}`
-         }
-         })
-         .then(res => this._getResponse(res));
-   }
+   // getContent(token) {
+   //    return fetch(`${this.url}/users/me`, {
+   //       method: 'GET',
+   //       headers: {
+   //          'Accept': 'application/json',
+   //          "Content-Type": "application/json",
+   //          "Authorization" : `Bearer ${token}`
+   //       }
+   //       })
+   //       .then(res => this._getResponse(res));
+   // }
 }
 
 export default new Authorization({

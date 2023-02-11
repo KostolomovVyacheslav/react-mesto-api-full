@@ -12,15 +12,15 @@ class Api {
       }
    }
 
-   getUserData() {
-      return fetch(`${this._url}/users/me`, {
-         method: 'GET',
-         headers: {
-            Authorization: `${this._headers}`
-         }
-      })
-      .then(this._checkResponse)
-   }
+   // getUserData() {
+   //    return fetch(`${this._url}/users/me`, {
+   //       method: 'GET',
+   //       headers: {
+   //          Authorization: `${this._headers}`
+   //       }
+   //    })
+   //    .then(this._checkResponse)
+   // }
 
    getInitialCards() {
       return fetch(`${this._url}/cards`, {
@@ -60,20 +60,20 @@ class Api {
    //    })
    // }
 
-   editProfile(userData) {
-      return fetch(`${this._url}/users/me`, {
-         method: 'PATCH',
-         headers: {
-            Authorization: `${this._headers}`,
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({
-            name: userData.name,
-            about: userData.about
-          })
-      })
-      .then(this._checkResponse)
-   }
+   // editProfile(userData) {
+   //    return fetch(`${this._url}/users/me`, {
+   //       method: 'PATCH',
+   //       headers: {
+   //          Authorization: `${this._headers}`,
+   //          'Content-Type': 'application/json'
+   //       },
+   //       body: JSON.stringify({
+   //          name: userData.name,
+   //          about: userData.about
+   //        })
+   //    })
+   //    .then(this._checkResponse)
+   // }
 
    changeProfileAvatar(avatarData) {
       return fetch(`${this._url}/users/me/avatar`, {
