@@ -12,15 +12,15 @@ class Api {
       }
    }
 
-   getUserData() {
-      return fetch(`${this._url}/users/me`, {
-         method: 'GET',
-         headers: {
-            Authorization: `${this._headers}`
-         }
-      })
-      .then(this._checkResponse)
-   }
+   // getUserData() {
+   //    return fetch(`${this._url}/users/me`, {
+   //       method: 'GET',
+   //       headers: {
+   //          Authorization: `${this._headers}`
+   //       }
+   //    })
+   //    .then(this._checkResponse)
+   // }
 
    getInitialCards() {
       return fetch(`${this._url}/cards`, {
@@ -47,18 +47,18 @@ class Api {
       .then(this._checkResponse)
    }
 
-   getUserId() {
-      return fetch(`https://mesto.nomoreparties.co/v1/cohort-46/users/me`, {
-         method: 'GET',
-         headers: {
-            Authorization: 'ddb2474c-5895-4c61-a372-bb2b9d4e6bd7'
-         }
-      })
-      .then(this._checkResponse)
-      .then(result => {
-         return result._id;
-      })
-   }
+   // getUserId() {
+   //    return fetch(`https://mesto.nomoreparties.co/v1/cohort-46/users/me`, {
+   //       method: 'GET',
+   //       headers: {
+   //          Authorization: 'ddb2474c-5895-4c61-a372-bb2b9d4e6bd7'
+   //       }
+   //    })
+   //    .then(this._checkResponse)
+   //    .then(result => {
+   //       return result._id;
+   //    })
+   // }
 
    editProfile(userData) {
       return fetch(`${this._url}/users/me`, {
@@ -124,7 +124,7 @@ class Api {
 }
 
 export default new Api({
-   url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
+   url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru',
    headers: {
       'Content-Type': 'application/json',
     },

@@ -58,5 +58,5 @@ class Authorization {
 }
 
 export default new Authorization({
-   url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
+   url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru',
 });
