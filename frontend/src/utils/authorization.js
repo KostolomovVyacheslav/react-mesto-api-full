@@ -1,7 +1,6 @@
 class Authorization {
-   constructor({url, headers, token}) {
+   constructor({url, token}) {
       this.url = url;
-      this._headers = headers;
       this.token = token;
    }
    
@@ -16,6 +15,7 @@ class Authorization {
       return fetch(`${this.url}/signup`, {
          method: 'POST',
          headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json'
          },
          body: JSON.stringify({
@@ -30,6 +30,7 @@ class Authorization {
    return fetch(`${this.url}/signin`, {
       method: 'POST',
       headers: {
+         'Accept': 'application/json',
          'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -44,6 +45,7 @@ class Authorization {
       return fetch(`${this.url}/users/me`, {
          method: 'GET',
          headers: {
+            'Accept': 'application/json',
             "Content-Type": "application/json",
             "Authorization" : `Bearer ${token}`
          }
@@ -54,7 +56,4 @@ class Authorization {
 
 export default new Authorization({
    url: 'https://api.vyacheslav-kostolomov.nomoredomainsclub.ru/',
-   headers: {
-      'Content-Type': 'application/json',
-    },
 });
