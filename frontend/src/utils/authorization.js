@@ -51,7 +51,7 @@ class Authorization {
          headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${token}`
+            "Authorization" : `${token}`
          }
          })
          .then(res => this._getResponse(res));
