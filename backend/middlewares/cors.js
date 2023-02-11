@@ -1,6 +1,6 @@
 const allowedCors = [
-  'https://vyacheslav-kostolomov.nomoredomainsclub.ru/',
-  'http://vyacheslav-kostolomov.nomoredomainsclub.ru/',
+  'https://vyacheslav-kostolomov.nomoredomainsclub.ru',
+  'http://vyacheslav-kostolomov.nomoredomainsclub.ru',
   'http://localhost:3000',
 ];
 
