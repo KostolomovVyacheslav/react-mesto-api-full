@@ -12,15 +12,15 @@ class Api {
       }
    }
 
-   // getUserData() {
-   //    return fetch(`${this._url}/users/me`, {
-   //       method: 'GET',
-   //       headers: {
-   //          Authorization: `${this._headers}`
-   //       }
-   //    })
-   //    .then(this._checkResponse)
-   // }
+   getUserData() {
+      return fetch(`${this._url}/users/me`, {
+         method: 'GET',
+         headers: {
+            Authorization: `${this._headers}`
+         }
+      })
+      .then(this._checkResponse)
+   }
 
    getInitialCards() {
       return fetch(`${this._url}/cards`, {
