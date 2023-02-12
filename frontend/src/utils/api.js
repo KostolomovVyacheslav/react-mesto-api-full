@@ -12,21 +12,35 @@ class Api {
       }
    }
 
-   _getHeaders() {
-      const jwt = localStorage.getItem('jwt');
-      return {
-         'Authorization': `Bearer ${jwt}`,
-         ...this._headers,
-      };
-   }
+   _fetchRequest (url, options) {
+      options.credentials = 'include'
+      return fetch(url, options)
+        .then(res => {
+          if (res.ok) {
+            return res.json()
+          }
+          return Promise.reject(new Error(`Ошибка: ${res.status}`))
+        })
+    }
+    
+    getUserData () {
+      const url = `${this._url}/users/me`
+      const options = {
+        method: 'GET',
+        headers: this._headers
+      }
+      return this._fetchRequest(url, options)
+    }
 
-   getUserData() {
-      return fetch(`${this._url}/users/me`, {
-         header: this._getHeaders(),
-      }).then((res) => {
-         return this._checkResponse;
-      })
-   }
+
+    getInitialCards () {
+      const url = `${this._url}/cards`
+      const options = {
+        method: 'GET',
+        headers: this._headers
+      }
+      return this._fetchRequest(url, options)
+    }
 
 
    // getUserData() {
@@ -39,15 +53,15 @@ class Api {
    //    .then(this._checkResponse)
    // }
 
-   getInitialCards() {
-      return fetch(`${this._url}/cards`, {
-         method: 'GET',
-         headers: {
-            Authorization: `${this._headers}`
-         }
-      })
-      .then(this._checkResponse)
-   }
+   // getInitialCards() {
+   //    return fetch(`${this._url}/cards`, {
+   //       method: 'GET',
+   //       headers: {
+   //          Authorization: `${this._headers}`
+   //       }
+   //    })
+   //    .then(this._checkResponse)
+   // }
 
    addNewCard(item) {
       return fetch(`${this._url}/cards`, {

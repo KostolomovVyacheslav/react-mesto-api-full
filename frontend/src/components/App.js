@@ -45,7 +45,36 @@ function App() {
   const [infoTooltip, setInfoTooltip] = useState(false);
   const [popupTitle, setPopupTitle] = useState('');
 
-  const jwt = localStorage.getItem('token');
+
+  const getContent = () => {
+    Promise.all([api.getUserData(), api.getInitialCards()])
+    .then(([userDataResult, cardsResult]) => {
+      console.log(userDataResult, cardsResult)
+      setCurrentUser(userDataResult);
+      setCards(cardsResult);
+    })
+    .catch(error => console.log(error));
+  }
+  
+
+  const checkCookie = (cookie, value) => {
+    const str = '^(.*;)?s*' + cookie + 's*=s*[^;]+(.*)?$'
+    const regExp = new RegExp(str)
+    const res = document.cookie.match(regExp)
+    console.log(res);
+    return res !== null ? res[0] === cookie + '=' + value : false
+  }
+
+
+  React.useEffect(() => {
+    // checkToken
+    // if (checkCookie('authorized', true)) {
+    //   setLoggedIn(true)
+    //   getContent()
+    //   navigate('/')
+    // }
+  }, [navigate])
+
 
   const handleRegister = (data) => {
     authorization.register(data)
@@ -63,61 +92,26 @@ function App() {
     })
   };
 
+
   const handleAuthorization = (data) => {
     authorization.authorize(data)
     .then(res => {
-      localStorage.setItem('token', res.token);
-      setLoggedIn(true);
       setEmail(data.email);
+      console.log(data, loggedIn, document.cookie, res);
+      checkCookie('authorized', true)
+      getContent();
+      setLoggedIn(true);
       navigate('/');
+      console.log(loggedIn);
     })
-    .catch(() => {
+    .catch((err) => {
       setPopupTitle('Что-то пошло не так! Попробуйте ещё раз.');
       setIsAuthSuccess(false);
       handleInfoTooltip();
+      console.log(err)
     })
   };
 
-  const tockenCheck = () => {
-    if (!jwt) return;
-
-    authorization.getContent(jwt)
-    .then(res => {
-      setLoggedIn(true);
-      setEmail(res.data.email);
-      navigate('/');
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  };
-
-  useEffect(() => {
-    tockenCheck();
-  }, []);
-
-
-  useEffect(() => {
-    if (loggedIn === true) {
-      api.getUserData()
-      .then((userDataResult) => {
-        setCurrentUser(userDataResult);
-      })
-      .catch('Ошибка на фронте');
-    }
-  }, [loggedIn]);
-
-
-  // useEffect(() => {
-  //   if (loggedIn) {
-  //     Promise.all([api.getUserData(), api.getInitialCards()])
-  //     .then(([userDataResult, cardsResult]) => {
-  //       setCurrentUser(userDataResult);
-  //       setCards(cardsResult);
-  //     })
-  //     .catch(error => console.log(error));
-  //   }
-  // }, [loggedIn]);
 
   const handleInfoTooltip = () => {
     setInfoTooltip(true);
@@ -126,7 +120,6 @@ function App() {
   const handleLogout = () => {
     setLoggedIn(false);
     setEmail(null);
-    localStorage.removeItem('token');
     navigate('/signin');
   };
 

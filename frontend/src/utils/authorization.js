@@ -56,6 +56,7 @@ class Authorization {
          })
          .then(res => this._getResponse(res));
    }
+   
 }
 
 export default new Authorization({

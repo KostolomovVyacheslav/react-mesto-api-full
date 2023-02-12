@@ -5,16 +5,21 @@ import Card from './Card';
 function Main(props) {
 
    const currentUser = useContext(CurrentUserContext);
+   console.log('currentUser: ', currentUser, props.loggedIn);
+
+   
 
    return(
-      <main className="content">
+      <>
+      {currentUser.user && props.loggedIn && (
+         <main className="content">
          <section className="profile">
-            <div className="profile__avatar" style={{ backgroundImage: `url(${currentUser.avatar})` }}>
+            <div className="profile__avatar" style={{ backgroundImage: `url(${currentUser.user.avatar})` }}>
                <button type="button" className="profile__avatar-button" onClick={props.onEditAvatar}></button>
             </div>
             <div className="profile__info">
-               <h1 className="profile__name">{currentUser.name}</h1>
-               <p className="profile__description">{currentUser.about}</p>
+               <h1 className="profile__name">{currentUser.user.name}</h1>
+               <p className="profile__description">{currentUser.user.about}</p>
                <button type="button" className="profile__edit-button" onClick={props.onEditProfile}></button>
             </div>
             <button type="button" className="profile__add-button" onClick={props.onAddPlace}></button>
@@ -36,6 +41,8 @@ function Main(props) {
             </ul>
          </section>
       </main>
+      ) }
+      </>
    )
 }
 
