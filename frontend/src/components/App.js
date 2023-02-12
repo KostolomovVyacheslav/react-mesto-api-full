@@ -23,6 +23,8 @@ function App() {
 
   const navigate = useNavigate();
 
+  // const token = 
+
   const [currentUser, setCurrentUser] = useState({});
   const [renderLoading, setRenderLoading] = useState(false);
   const [cards, setCards] = useState([]);
@@ -47,33 +49,32 @@ function App() {
 
 
   const getContent = () => {
-    Promise.all([api.getUserData(), api.getInitialCards()])
+    return Promise.all([api.getUserData(), api.getInitialCards()])
     .then(([userDataResult, cardsResult]) => {
       console.log(userDataResult, cardsResult)
       setCurrentUser(userDataResult);
       setCards(cardsResult);
+      return true;
     })
     .catch(error => console.log(error));
-  }
-  
-
-  const checkCookie = (cookie, value) => {
-    const str = '^(.*;)?s*' + cookie + 's*=s*[^;]+(.*)?$'
-    const regExp = new RegExp(str)
-    const res = document.cookie.match(regExp)
-    console.log(res);
-    return res !== null ? res[0] === cookie + '=' + value : false
   }
 
 
   React.useEffect(() => {
-    // checkToken
-    // if (checkCookie('authorized', true)) {
-    //   setLoggedIn(true)
-    //   getContent()
-    //   navigate('/')
-    // }
-  }, [navigate])
+    getContent()
+    .then((res) => {
+      if (res) {
+        setLoggedIn(true);
+        navigate('/');
+      } else {
+        setLoggedIn(false);
+        navigate('/signin');
+      }
+    })
+    .catch(() => {
+      console.log('ошибка');
+    })
+  }, [])
 
 
   const handleRegister = (data) => {
@@ -98,7 +99,6 @@ function App() {
     .then(res => {
       setEmail(data.email);
       console.log(data, loggedIn, document.cookie, res);
-      checkCookie('authorized', true)
       getContent();
       setLoggedIn(true);
       navigate('/');
