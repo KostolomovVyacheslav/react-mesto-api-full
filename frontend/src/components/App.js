@@ -96,16 +96,28 @@ function App() {
     tockenCheck();
   }, []);
 
+
   useEffect(() => {
-    if (loggedIn) {
-      Promise.all([api.getUserData(), api.getInitialCards()])
-      .then(([userDataResult, cardsResult]) => {
+    if (loggedIn === true) {
+      api.getUserData()
+      .then((userDataResult) => {
         setCurrentUser(userDataResult);
-        setCards(cardsResult);
       })
-      .catch(error => console.log(error));
+      .catch('Ошибка на фронте');
     }
   }, [loggedIn]);
+
+
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     Promise.all([api.getUserData(), api.getInitialCards()])
+  //     .then(([userDataResult, cardsResult]) => {
+  //       setCurrentUser(userDataResult);
+  //       setCards(cardsResult);
+  //     })
+  //     .catch(error => console.log(error));
+  //   }
+  // }, [loggedIn]);
 
   const handleInfoTooltip = () => {
     setInfoTooltip(true);

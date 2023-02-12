@@ -44,14 +44,14 @@ class Authorization {
       .then(res => this._getResponse(res));
    }
 
-   getContent(token) {
+   getContent(jwt) {
       return fetch(`${this._url}/users/me`, {
          method: 'GET',
          credentials: 'include',
          headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json",
-            "Authorization" : `${token}`
+            "Authorization" : `Bearer ${jwt}`
          }
          })
          .then(res => this._getResponse(res));
