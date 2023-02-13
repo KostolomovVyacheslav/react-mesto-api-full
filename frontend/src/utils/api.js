@@ -12,60 +12,32 @@ class Api {
       }
    }
 
-   _fetchRequest (url, options) {
-      options.credentials = 'include'
-      return fetch(url, options)
-        .then(res => {
-          if (res.ok) {
-            return res.json()
-          }
-          return Promise.reject(new Error(`Ошибка: ${res.status}`))
-        })
-    }
-    
-    getUserData () {
-      const url = `${this._url}/users/me`
-      const options = {
-        method: 'GET',
-        headers: this._headers
-      }
-      return this._fetchRequest(url, options)
-    }
+   getUserData() {
+      return fetch(`${this._url}/users/me`, {
+         method: 'GET',
+         credentials: 'include',
+         headers: {
+            Authorization: `${this._headers}`
+         }
+      })
+      .then(this._checkResponse)
+   }
 
-
-    getInitialCards () {
-      const url = `${this._url}/cards`
-      const options = {
-        method: 'GET',
-        headers: this._headers
-      }
-      return this._fetchRequest(url, options)
-    }
-
-
-   // getUserData() {
-   //    return fetch(`${this._url}/users/me`, {
-   //       method: 'GET',
-   //       headers: {
-   //          Authorization: `${this._headers}`
-   //       }
-   //    })
-   //    .then(this._checkResponse)
-   // }
-
-   // getInitialCards() {
-   //    return fetch(`${this._url}/cards`, {
-   //       method: 'GET',
-   //       headers: {
-   //          Authorization: `${this._headers}`
-   //       }
-   //    })
-   //    .then(this._checkResponse)
-   // }
+   getInitialCards() {
+      return fetch(`${this._url}/cards`, {
+         method: 'GET',
+         credentials: 'include',
+         headers: {
+            Authorization: `${this._headers}`
+         }
+      })
+      .then(this._checkResponse)
+   }
 
    addNewCard(item) {
       return fetch(`${this._url}/cards`, {
          method: 'POST',
+         credentials: 'include',
          headers: {
             Authorization: `${this._headers}`,
             'Content-Type': 'application/json'
@@ -78,22 +50,10 @@ class Api {
       .then(this._checkResponse)
    }
 
-   // getUserId() {
-   //    return fetch(`https://mesto.nomoreparties.co/v1/cohort-46/users/me`, {
-   //       method: 'GET',
-   //       headers: {
-   //          Authorization: 'ddb2474c-5895-4c61-a372-bb2b9d4e6bd7'
-   //       }
-   //    })
-   //    .then(this._checkResponse)
-   //    .then(result => {
-   //       return result._id;
-   //    })
-   // }
-
    editProfile(userData) {
       return fetch(`${this._url}/users/me`, {
          method: 'PATCH',
+         credentials: 'include',
          headers: {
             Authorization: `${this._headers}`,
             'Content-Type': 'application/json'
@@ -109,6 +69,7 @@ class Api {
    changeProfileAvatar(avatarData) {
       return fetch(`${this._url}/users/me/avatar`, {
          method: 'PATCH',
+         credentials: 'include',
          headers: {
             Authorization: `${this._headers}`,
             'Content-Type': 'application/json'
@@ -123,6 +84,7 @@ class Api {
    deleteCard(id) {
       return fetch(`${this._url}/cards/${id}`, {
          method: 'DELETE',
+         credentials: 'include',
          headers: {
             Authorization: `${this._headers}`,
             'Content-Type': 'application/json'
@@ -135,6 +97,7 @@ class Api {
       if (isLiked) {
          return fetch(`${this._url}/cards/${id}/likes`, {
             method: 'DELETE',
+            credentials: 'include',
             headers: {
                Authorization: `${this._headers}`,
                'Content-Type': 'application/json'
@@ -144,6 +107,7 @@ class Api {
       } else {
          return fetch(`${this._url}/cards/${id}/likes`, {
             method: 'PUT',
+            credentials: 'include',
             headers: {
                Authorization: `${this._headers}`,
                'Content-Type': 'application/json'

@@ -51,14 +51,13 @@ function App() {
   const getContent = () => {
     return Promise.all([api.getUserData(), api.getInitialCards()])
     .then(([userDataResult, cardsResult]) => {
-      console.log(userDataResult, cardsResult)
-      setCurrentUser(userDataResult);
+      setCurrentUser(userDataResult.user);
+      setEmail(userDataResult.user.email);
       setCards(cardsResult);
       return true;
     })
     .catch(error => console.log(error));
   }
-
 
 
   React.useEffect(() => {
@@ -72,8 +71,8 @@ function App() {
         navigate('/signin');
       }
     })
-    .catch(() => {
-      console.log('ошибка');
+    .catch((err) => {
+      console.log(err);
     })
   }, [])
 
@@ -126,6 +125,7 @@ function App() {
 
   const handleCardLike = (card) => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
+    console.log(currentUser);
 
     api.changeLikeStatus(card._id, isLiked)
     .then((newCard) => {
@@ -169,6 +169,7 @@ function App() {
     api.editProfile(userData)
     .then(res => {
       setCurrentUser(res);
+      setEmail(res.email);
       closeAllPopups();
     })
     .catch(error => {
