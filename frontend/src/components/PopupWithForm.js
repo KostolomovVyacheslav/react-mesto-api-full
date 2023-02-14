@@ -5,7 +5,7 @@ function PopupWithForm({name, title, buttonText, ...props}) {
    const stateFormPopupClass = `${props.isOpen && 'popup_opened'}`;
    
    return(
-      <div className={`popup ${stateFormPopupClass}`}>
+      <div className={`popup ${stateFormPopupClass}`} onClick={props.onCloseClick}>
          <div className="popup__container">
          <button type="button" className="popup__close-button" onClick={props.onClose}></button>
          <form id={props.formId} name={name} onSubmit={props.onSubmit} className="popup__form" autoComplete="off">

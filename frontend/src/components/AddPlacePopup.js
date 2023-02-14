@@ -33,6 +33,7 @@ function AddPlacePopup(props) {
    return(
       <PopupWithForm
           isOpen={props.isOpen}
+          onCloseClick={props.onCloseClick}
           onClose={props.onClose}
           onSubmit={handleSubmit}
           title={'Новое место'}

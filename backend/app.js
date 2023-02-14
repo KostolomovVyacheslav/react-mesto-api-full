@@ -8,7 +8,7 @@ const cors = require('./middlewares/cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const isUrl = require('validator/lib/isURL');
 const BadRequest = require('./errors/400-BadRequestError');
-const { createUser, login } = require('./controllers/users');
+const { createUser, login, signOut } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const handleError = require('./middlewares/handleError');
@@ -61,6 +61,8 @@ app.post('/signin', celebrate({
     password: Joi.string().required(),
   }),
 }), login);
+
+app.post('/signout', signOut)
 
 app.use(auth);
 

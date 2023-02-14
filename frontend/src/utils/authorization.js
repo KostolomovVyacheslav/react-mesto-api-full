@@ -57,6 +57,17 @@ class Authorization {
          .then(res => this._getResponse(res));
    }
    
+   logout() {
+      return fetch(`${this._url}/signout`, {
+         method: 'POST',
+         credentials: 'include',
+         headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
+         }
+         })
+         .then(res => this._getResponse(res));
+   }
 }
 
 export default new Authorization({

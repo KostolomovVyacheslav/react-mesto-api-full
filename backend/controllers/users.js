@@ -136,6 +136,21 @@ const login = (req, res, next) => {
     .catch(next);
 };
 
+const signOut = (req, res, next) => {
+  try {
+    return res
+      .clearCookie('jwt', {
+        path: '/',
+        domain: DOMAIN,
+      })
+      .send({
+        message: 'Выход выполнен',
+      });
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   getUsers,
   getUserById,
@@ -144,4 +159,5 @@ module.exports = {
   profileUpdate,
   avatarUpdate,
   login,
+  signOut,
 };

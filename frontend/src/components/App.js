@@ -23,8 +23,6 @@ function App() {
 
   const navigate = useNavigate();
 
-  // const token = 
-
   const [currentUser, setCurrentUser] = useState({});
   const [renderLoading, setRenderLoading] = useState(false);
   const [cards, setCards] = useState([]);
@@ -98,11 +96,9 @@ function App() {
     authorization.authorize(data)
     .then(res => {
       setEmail(data.email);
-      console.log(data, loggedIn, document.cookie, res);
       getContent();
       setLoggedIn(true);
       navigate('/');
-      console.log(loggedIn);
     })
     .catch((err) => {
       setPopupTitle('Что-то пошло не так! Попробуйте ещё раз.');
@@ -118,14 +114,22 @@ function App() {
   };
 
   const handleLogout = () => {
-    setLoggedIn(false);
-    setEmail(null);
-    navigate('/signin');
+    authorization.logout()
+    .then((res) => {
+      navigate('/signin');
+      setEmail(null);
+      setLoggedIn(false);
+    })
+    .catch((err) => {
+      setPopupTitle('Что-то пошло не так! Попробуйте ещё раз.');
+      handleInfoTooltip();
+      setIsAuthSuccess(false);
+      console.log(err);
+    })
   };
 
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    console.log(currentUser);
+    const isLiked = card.likes.some(i => i === currentUser._id);
 
     api.changeLikeStatus(card._id, isLiked)
     .then((newCard) => {
@@ -224,6 +228,28 @@ function App() {
     setInfoTooltip(false);
   };
 
+  const handlePopupCloseByClick = (evt) => {
+    if (evt.target.classList.contains('popup')) {
+      closeAllPopups();
+    }
+  };
+
+  useEffect(() => {
+    if (isEditProfilePopupOpen || isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard) {
+      function handleEsc(evt) {
+        if (evt.key === 'Escape') {
+          closeAllPopups();
+        }
+      }
+
+      document.addEventListener('keydown', handleEsc);
+
+      return () => {
+        document.removeEventListener('keydown', handleEsc);
+      }
+    }
+  }, [isEditProfilePopupOpen, isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, selectedCard]);
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -273,15 +299,34 @@ function App() {
 
         </Routes>
 
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}  renderLoading={renderLoading}/>
+        <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onCloseClick={handlePopupCloseByClick}
+        onUpdateAvatar={handleUpdateAvatar}
+        renderLoading={renderLoading}
+        />
 
-        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} renderLoading={renderLoading}/>
+        <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onCloseClick={handlePopupCloseByClick}
+        onUpdateUser={handleUpdateUser}
+        renderLoading={renderLoading}
+        />
 
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onUpdateNewCard={handleAddPlaceSubmit} renderLoading={renderLoading}/>
+        <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onCloseClick={handlePopupCloseByClick}
+        onUpdateNewCard={handleAddPlaceSubmit}
+        renderLoading={renderLoading}
+        />
 
         <PopupWithForm
           isOpen={isDeletePopupOpen}
           onClose={closeAllPopups}
+          onCloseClick={handlePopupCloseByClick}
           title={'Вы уверены?'}
           name={'delete-form'}
           formId={'#delete-img-form'}
@@ -294,6 +339,7 @@ function App() {
           isOpen={isImagePopupOpen}
           card={selectedCard}
           onClose={closeAllPopups}
+          onCloseClick={handlePopupCloseByClick}
         />
 
         <InfoTooltip
