@@ -116,9 +116,9 @@ function App() {
   const handleLogout = () => {
     authorization.logout()
     .then((res) => {
-      navigate('/sigout');
       setEmail(null);
       setLoggedIn(false);
+      navigate('/signin');
     })
     .catch((err) => {
       setPopupTitle('Что-то пошло не так! Попробуйте ещё раз.');
