@@ -141,7 +141,6 @@ const signOut = (req, res, next) => {
     return res
       .clearCookie('jwt', {
         path: '/',
-        domain: DOMAIN,
       })
       .send({
         message: 'Выход выполнен',

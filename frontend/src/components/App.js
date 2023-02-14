@@ -116,7 +116,7 @@ function App() {
   const handleLogout = () => {
     authorization.logout()
     .then((res) => {
-      navigate('/signin');
+      navigate('/sigout');
       setEmail(null);
       setLoggedIn(false);
     })
