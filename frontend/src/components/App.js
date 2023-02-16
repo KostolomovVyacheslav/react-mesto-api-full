@@ -51,7 +51,7 @@ function App() {
     .then(([userDataResult, cardsResult]) => {
       setCurrentUser(userDataResult.user);
       setEmail(userDataResult.user.email);
-      setCards(cardsResult);
+      setCards(cardsResult.reverse());
       return true;
     })
     .catch(error => console.log(error));
