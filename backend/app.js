@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const cors = require('./middlewares/cors');
 const limiter = require('./utils/limiterConfig');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const router = require('./routes');
+const routes = require('./routes');
 const handleError = require('./middlewares/handleError');
 
 const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
@@ -32,13 +32,11 @@ app.get('/crash-test', () => {
 
 app.use(requestLogger);
 
-app.use(router);
+app.use(routes);
 
 app.use(errorLogger);
 
 app.use(errors());
 app.use(handleError);
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+app.listen(PORT);
