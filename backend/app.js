@@ -1,16 +1,13 @@
 require('dotenv').config();
 const express = require('express');
-const cookieParser = require('cookie-parser');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const { errors } = require('celebrate');
+const helmet = require('helmet');
 const cors = require('./middlewares/cors');
-const { celebrate, Joi, errors } = require('celebrate');
-const isUrl = require('validator/lib/isURL');
-const BadRequest = require('./errors/400-BadRequestError');
-const { createUser, login, signOut } = require('./controllers/users');
+const limiter = require('./utils/limiterConfig');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const auth = require('./middlewares/auth');
+const router = require('./routes');
 const handleError = require('./middlewares/handleError');
 
 const { PORT = 3000, MONGO_URL = 'mongodb://localhost:27017/mestodb' } = process.env;
@@ -19,12 +16,6 @@ mongoose.connect(MONGO_URL);
 
 const app = express();
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Слишком много запросов, пожалуйста попробуйте позже :)',
-});
-
 app.use(cors);
 app.use(cookieParser());
 app.use(limiter);
@@ -32,6 +23,7 @@ app.use(helmet());
 
 app.use(express.json());
 
+// Test pm2, need to delete
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
@@ -40,36 +32,7 @@ app.get('/crash-test', () => {
 
 app.use(requestLogger);
 
-app.post('/signup', celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().custom((link) => {
-      if (isUrl(link, { require_protocol: true })) {
-        return link;
-      }
-      throw new BadRequest('Некорректный адрес URL');
-    }),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), createUser);
-
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  }),
-}), login);
-
-app.post('/signout', signOut)
-
-app.use(auth);
-
-app.use('/cards', require('./routes/cards'));
-app.use('/users', require('./routes/users'));
-
-app.use('/', require('./routes/notExist'));
+app.use(router);
 
 app.use(errorLogger);
 

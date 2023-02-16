@@ -1,9 +1,9 @@
 import React from "react";
 
 function PopupWithForm({name, title, buttonText, ...props}) {
-   
+
    const stateFormPopupClass = `${props.isOpen && 'popup_opened'}`;
-   
+
    return(
       <div className={`popup ${stateFormPopupClass}`} onClick={props.onCloseClick}>
          <div className="popup__container">

@@ -8,11 +8,9 @@ const ForbiddenError = require('../errors/403-ForbiddenError');
 const getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => {
-      res.status(200).send(cards);
+      res.send(cards);
     })
-    .catch(() => {
-      next(new ServerError('На сервере произошла ошибка'));
-    });
+    .catch(next);
 };
 
 const createCard = (req, res, next) => {
@@ -42,7 +40,7 @@ const deleteCard = (req, res, next) => {
       if (currentUser === card.owner.toString()) {
         Card.deleteOne({ _id: cardId })
           .then(() => {
-            res.status(200).send(card);
+            res.send(card);
           });
       } else {
         next(new ForbiddenError('В доступе отказано'));
@@ -87,7 +85,7 @@ const dislikeCard = (req, res, next) => {
   ).orFail(() => {
     throw new NotFoundError('Карточка с указанным _id не найдена');
   })
-    .then((card) => res.status(200).send(card))
+    .then((card) => res.send(card))
     .catch((err) => {
       if (err instanceof mongoose.Error.CastError) {
         next(new BadRequest('Не корректный _id'));

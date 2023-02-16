@@ -11,11 +11,9 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      res.status(200).send(users);
+      res.send(users);
     })
-    .catch(() => {
-      next(new ServerError('На сервере произошла ошибка'));
-    });
+    .catch(next);
 };
 
 const getSelfInfo = (req, res, next) => {
@@ -24,7 +22,7 @@ const getSelfInfo = (req, res, next) => {
       throw new NotFoundError('Пользователь не найден');
     })
     .then((user) => {
-      res.status(200).send({ user });
+      res.send({ user });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
@@ -42,7 +40,7 @@ const getUserById = (req, res, next) => {
       throw new NotFoundError('Пользователь по указанному id не найден');
     })
     .then((user) => {
-      res.status(200).send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.message === 'CastError') {
@@ -92,7 +90,7 @@ const profileUpdate = (req, res, next) => {
     throw new NotFoundError('Пользователь по указанному id не найден');
   })
     .then((user) => {
-      res.status(200).send(user);
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
@@ -108,7 +106,7 @@ const avatarUpdate = async (req, res, next) => {
     const newAvatar = await User.findByIdAndUpdate(req.user._id, req.body, {
       new: true, runValidators: true,
     });
-    res.status(200).send(newAvatar);
+    res.send(newAvatar);
   } catch (err) {
     if (err.name === 'ValidationError') {
       next(new BadRequest('Переданы некорректные данные при обновлении аватара'));

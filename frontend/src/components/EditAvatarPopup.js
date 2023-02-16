@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup(props) {
-   
+
    const inputRef = useRef();
 
    const buttonText = `${props.renderLoading ? 'Сохранение...' : 'Сохранить'}`;
